@@ -19,7 +19,7 @@ Hello, world!
 
 ## Overview
 This modules allows building flatpaks programmatically from Node. It requires
-Node 10 or above and flatpak >= 0.6.13 to be installed on your system.
+Node 12 (LTS) or above and flatpak >= 0.6.13 to be installed on your system.
 
 Under the hood, this is just a wrapper for the [flatpak-builder](https://docs.flatpak.org/en/latest/flatpak-builder.html)
 tool with some extra sugar added.
