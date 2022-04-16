@@ -56,19 +56,23 @@ function getOptionsWithDefaults (options, manifest) {
 async function spawnWithLogging (options, command, args, allowFail) {
   return new Promise((resolve, reject) => {
     logger(`$ ${command} ${args.join(' ')}`)
+    const output = []
     const child = childProcess.spawn(command, args, { cwd: options['working-dir'] })
     child.stdout.on('data', (data) => {
+      output.push(data)
       logger(`1> ${data}`)
     })
     child.stderr.on('data', (data) => {
+      output.push(data)
       logger(`2> ${data}`)
     })
     child.on('error', (error) => {
+      logger(`error - ${error.message} ${error.stack}`)
       reject(error)
     })
     child.on('close', (code) => {
       if (!allowFail && code !== 0) {
-        reject(new Error(`${command} failed with status code ${code}`))
+        reject(new Error(`${command} failed with status code ${code} ${output.join(' ')}`))
       }
       resolve(code === 0)
     })
